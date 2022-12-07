@@ -9,7 +9,6 @@ import { Localize, localize } from '@deriv/translations';
 import ToggleAccountType from 'Components/toggle-account-type';
 import {
     tour_step_config,
-    eu_tour_step_config,
     tour_styles,
     tour_step_locale,
     eu_tour_step_locale,
