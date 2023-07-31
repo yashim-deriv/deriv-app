@@ -3,7 +3,7 @@ import { useFetch } from '@deriv/api';
 
 /** A custom hook to get the currency config information from `website_status` endpoint */
 const useCurrencyConfig = () => {
-    const { data } = useFetch('website_status');
+    const { data, ...rest } = useFetch('website_status');
 
     const currencies_config = useMemo(() => {
         if (!data?.website_status?.currencies_config) return undefined;
@@ -57,6 +57,8 @@ const useCurrencyConfig = () => {
                 is_USDK: currency === 'USDK',
                 /** Currency code */
                 code: currency,
+                /** Currency display code */
+                display_code: currency === 'UST' ? 'USDT' : currency,
                 /** Local asset name for the currency icon. ex: `IcCurrencyUsd` for `USD` */
                 icon: `IcCurrency${currency[0].toUpperCase() + currency.slice(1).toLowerCase()}`,
             };
@@ -75,6 +77,7 @@ const useCurrencyConfig = () => {
         getConfig,
         /** Available currencies and their information */
         currencies_config,
+        ...rest,
     };
 };
 

@@ -33,7 +33,6 @@ const WalletCard: React.FC<React.PropsWithChildren<TWalletCardProps>> = ({
         let icon_size: React.ComponentProps<typeof WalletIcon>['size'] = 'large';
         if (size === 'small') icon_size = 'medium';
         if (size === 'medium') icon_size = isMobile() && wallet.icon_type === 'crypto' ? 'medium' : 'large';
-
         return <WalletIcon type={wallet.icon_type} icon={wallet.icon} size={icon_size} />;
     };
 
@@ -53,18 +52,22 @@ const WalletCard: React.FC<React.PropsWithChildren<TWalletCardProps>> = ({
                     <div className={`wallet-card__content wallet-card__content--${size}`}>
                         <div className='wallet-card__top-wrapper'>
                             <IconComponent />
-                            <Badge
-                                custom_color='var(--text-prominent)'
-                                label={wallet.jurisdiction_title}
-                                type='bordered'
-                            />
+                            {wallet.jurisdiction_title === 'virtual' ? (
+                                <Badge label={localize('Demo')} type='contained' background_color='blue' />
+                            ) : (
+                                <Badge
+                                    custom_color='var(--text-prominent)'
+                                    label={wallet.jurisdiction_title.toUpperCase()}
+                                    type='bordered'
+                                />
+                            )}
                         </div>
 
                         <div className='wallet-card__bottom-wrapper'>
                             {state !== 'add' && state !== 'added' ? (
                                 <React.Fragment>
                                     <Text color='prominent' size={isMobile() ? 'xxxxs' : 'xxxs'}>
-                                        {wallet.name} {localize('Wallet')}
+                                        {wallet.name}
                                     </Text>
                                     <Text color='prominent' weight='bold' size={isMobile() ? 'xxs' : 'xs'}>
                                         {wallet.balance} {wallet.currency}

@@ -228,6 +228,10 @@ export default class NotificationStore extends BaseStore {
             this.notification_messages = this.notification_messages.filter(
                 notification => notification.platform === 'Account'
             );
+        } else if (window.location.pathname === routes.trade || window.location.pathname === routes.bot) {
+            // TODO: Add BE flag to trigger the notification
+            this.addNotificationMessage(this.client_notifications.wallets_migrated);
+            this.addNotificationMessage(this.client_notifications.wallets_failed);
         } else if (!window.location.pathname.includes(routes.cashier_p2p)) {
             this.notification_messages = this.notification_messages.filter(notification => {
                 if (notification.platform === undefined || notification.platform.includes(getPathname())) {
@@ -905,6 +909,7 @@ export default class NotificationStore extends BaseStore {
             },
             deriv_go: {
                 key: 'deriv_go',
+                header: <Localize i18n_default_text='Trade on the go' />,
                 message: (
                     <Localize
                         i18n_default_text='Get a faster mobile trading experience with the <0>{{platform_name_go}}</0> app!'
