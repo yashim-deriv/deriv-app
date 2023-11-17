@@ -1,16 +1,16 @@
 import React from 'react';
-import { APIProvider } from '@deriv/api';
+import { StandaloneAPIProvider } from '@deriv/api';
 import { ModalProvider } from './components/ModalProvider';
 import AppContent from './AppContent';
 import './styles/fonts.scss';
 import './index.scss';
 
 const App: React.FC = () => (
-    <APIProvider standalone>
+    <StandaloneAPIProvider>
         <ModalProvider>
             <AppContent />
         </ModalProvider>
-    </APIProvider>
+    </StandaloneAPIProvider>
 );
 
 export default App;

@@ -16,7 +16,7 @@ declare global {
 
 // This is a temporary workaround to share a single `QueryClient` instance between all the packages.
 // Later once we have each package separated we won't need this anymore and can remove this.
-const getSharedQueryClientContext = (): QueryClient => {
+export const getSharedQueryClientContext = (): QueryClient => {
     if (!window.ReactQueryClient) {
         window.ReactQueryClient = new QueryClient();
     }

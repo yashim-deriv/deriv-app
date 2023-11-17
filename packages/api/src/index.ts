@@ -3,6 +3,7 @@ import useMutation from './useMutation';
 import useQuery from './useQuery';
 
 export { default as APIProvider } from './APIProvider';
+export { default as StandaloneAPIProvider } from './providers/StandaloneAPIProvider';
 export * from './hooks';
 export { default as useInvalidateQuery } from './useInvalidateQuery';
 export { default as usePaginatedFetch } from './usePaginatedFetch';

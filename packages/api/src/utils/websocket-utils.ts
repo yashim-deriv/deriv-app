@@ -27,11 +27,15 @@ export const PLATFORM_APP_ID = {
     derivgo: 23789,
 } as const;
 
+export type Environment = keyof typeof ENVIRONMENT_URL;
+type OfficialURL = keyof typeof OFFICIAL_APP_ID;
+type Platform = keyof typeof PLATFORM_APP_ID;
+
 /**
  * Gets the WebSocket URL based on the client loginid. Priority QA -> Real -> Demo (default).
  * @returns WebSocket URL
  */
-export const getWebsocketURL = () => {
+export const getWebsocketEndpointURL = () => {
     const configServerURL = window.localStorage.getItem(CONFIG_SERVER_URL_KEY);
     if (configServerURL) return configServerURL;
 
@@ -56,7 +60,7 @@ export const getAppLanguage = () => window.localStorage.getItem(APP_LANGUAGE_KEY
 export const getAppId = () => {
     const hostname = window.location.hostname;
     const configAppID = window.localStorage.getItem(CONFIG_APP_ID_KEY);
-    const configPlatform = window.sessionStorage.getItem(CONFIG_PLATFORM_KEY);
+    const configPlatform = window.sessionStorage.getItem(CONFIG_PLATFORM_KEY) as Platform;
     const isBot = window.location.pathname.split('/')[2] === 'bot';
 
     if (configPlatform && PLATFORM_APP_ID[configPlatform]) return PLATFORM_APP_ID[configPlatform];
@@ -67,7 +71,7 @@ export const getAppId = () => {
     if (/^staging-app\.deriv\.(com|me|be)$/i.test(hostname) && isBot) return 19112;
     if (/deriv\.(com|me|be)$/i.test(hostname) && isBot) return 19111;
 
-    const domainAppId = OFFICIAL_APP_ID[hostname];
+    const domainAppId = OFFICIAL_APP_ID[hostname as OfficialURL];
     if (domainAppId) {
         return domainAppId;
     }
